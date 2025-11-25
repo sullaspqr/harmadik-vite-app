@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "bunx bun-server dist --port $PORT"
+    "start": "bun --serve dist --port $PORT"
   },
   "dependencies": {
     "boostrap": "^2.0.0",
