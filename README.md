@@ -1,7 +1,7 @@
 # Harmadik Vite App
 
 Közvetlen kapcsolatban van a [harmadik backend app-al](https://github.com/sullaspqr/harmadik-backend-app)
-
+Deployed at [Render.com](https://harmadik-vite-app.onrender.com/)
 # React + Vite + Kandó
 
 Korábbi npm-es React telepítőről átalakítva Vite-kompatibilissá.
