@@ -13,10 +13,10 @@ FROM oven/bun:latest
 WORKDIR /app
 
 COPY --from=build /app/dist ./dist
+COPY server.js ./server.js
 
 ENV PORT=3000
 EXPOSE 3000
 
-CMD ["bun", "x", "serve", "-s", "dist", "--listen", "http://0.0.0.0:$PORT"]
-
+CMD ["bun", "server.js"]
 
