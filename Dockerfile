@@ -1,22 +1,24 @@
-# Build
-FROM oven/bun:latest AS build
+# ---- Build stage ----
+FROM oven/bun:1 AS build
 WORKDIR /app
 
-COPY package.json bun.lockb* ./
+COPY package.json bun.lockb ./
 RUN bun install
 
 COPY . .
-RUN bun vite build
+RUN bun run build   # Vite → dist/
 
-# Run
-FROM oven/bun:latest
+# ---- Run stage ----
+FROM oven/bun:1
 WORKDIR /app
 
+# dist bemásolása
 COPY --from=build /app/dist ./dist
-COPY server.js ./server.js
 
-ENV PORT=3000
+# Bun static server – NINCS Node, NINCS serve, NINCS server.js
 EXPOSE 3000
+ENV PORT=3000
 
-CMD ["bun", "server.js"]
+CMD ["bun", "run", "start"]
+
 
