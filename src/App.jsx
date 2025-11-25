@@ -13,7 +13,7 @@ export const App =() => {
   const [adatok, setAdatok] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:5143/Comment')
+    fetch('https://harmadik.sulla.hu/Comment')
     .then((res) => (res.ok ? res.json(): []))
     .then((tartalom) => setAdatok(tartalom));
   }, []) // itt van a dependency array
