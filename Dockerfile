@@ -1,18 +1,21 @@
-FROM oven/bun:1
-
+# ---- Build stage ----
+FROM oven/bun:1 AS build
 WORKDIR /app
 
-# Copy package files first for better caching
 COPY package.json bun.lockb* ./
 RUN bun install
 
-# Copy source code and build
 COPY . .
-RUN bun run build
+RUN bun run build   # Vite → dist/
+
+# ---- Run stage ----
+FROM oven/bun:1
+WORKDIR /app
+
+COPY --from=build /app/dist ./dist
 
 EXPOSE 3000
 ENV PORT=3000
 
-# Change to the dist directory and serve from there
-WORKDIR /app/dist
-CMD ["bun", "--serve", ".", "--port", "3000"]
+# Serve the built app
+CMD ["bun", "--serve", "dist", "--port", "3000"]
