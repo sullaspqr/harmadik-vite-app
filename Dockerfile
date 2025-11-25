@@ -1,14 +1,8 @@
-# Build
-FROM node:18-alpine as builder
+FROM oven/bun:latest
 WORKDIR /app
-COPY package.json ./
-RUN npm install
 COPY . .
-RUN npm run build
+RUN bun install
+RUN bun vite build
+EXPOSE 3000
+CMD ["bun", "x", "serve", "-s", "dist", "-l", "3000"]
 
-# Run with serve
-FROM node:18-alpine
-RUN npm install -g serve
-WORKDIR /app
-COPY --from=builder /app/build ./build
-CMD ["serve", "-s", "build", "-l", "3000", "--no-clipboard"]
