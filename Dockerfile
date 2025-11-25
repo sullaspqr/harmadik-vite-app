@@ -1,20 +1,23 @@
-# ---- Build stage ----
-FROM oven/bun:1 AS build
+# Build
+FROM oven/bun:latest AS build
 WORKDIR /app
 
 COPY package.json bun.lockb* ./
 RUN bun install
 
 COPY . .
-RUN bun run build   # Vite → dist/
+RUN bun vite build
 
-# ---- Run stage ----
-FROM oven/bun:1
+# Run
+FROM oven/bun:latest
 WORKDIR /app
 
-COPY package.json bun.lockb* ./
 COPY --from=build /app/dist ./dist
+COPY server.js ./server.js
 
-ENV PORT=3000 
+ENV PORT=3000
+EXPOSE 3000
 
-CMD ["bun", "run", "start"] 
+CMD ["bun", "server.js"]
+
+
