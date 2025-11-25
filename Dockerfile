@@ -1,12 +1,21 @@
-# ---- Run stage ----
 FROM oven/bun:1
 WORKDIR /app
 
-COPY --from=build /app/dist ./dist
+# Copy package files
+COPY package.json bun.lockb* ./
+
+# Install dependencies
+RUN bun install
+
+# Copy source code
+COPY . .
+
+# Build the app
+RUN bun run build
 
 EXPOSE 3000
 ENV PORT=3000
 
-# Bun built-in static server
+# Serve the built app
 CMD ["bun", "--serve", "dist", "--port", "3000"]
 
